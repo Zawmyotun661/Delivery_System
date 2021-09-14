@@ -19,5 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/companies', 'App\Http\Controllers\CompanyController');
+// Route::resource('/companies', 'App\Http\Controllers\CompanyController');
+ Route::resource('/clients', 'App\Http\Controllers\ClientController');
 
