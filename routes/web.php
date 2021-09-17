@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Routing\Route as RoutingRoute;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
 
@@ -16,9 +17,22 @@ use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
-
+Route::get('/admin','App\Http\Controllers\admin\AdminDashboardController@index');
+Route::get('/clients','App\Http\Controllers\UserController@index');
+Route::resource('/country','App\Http\Controllers\CountryController');
 // Route::resource('/companies', 'App\Http\Controllers\CompanyController');
- Route::resource('/clients', 'App\Http\Controllers\ClientController');
+//  Route::resource('/clients', 'App\Http\Controllers\ClientController');
+ Route::resource('/drivers', 'App\Http\Controllers\DriverController');
+ Route::resource('/packages', 'App\Http\Controllers\PackageController');
 
+
+
+
+Route::get('/home','App\Http\Controllers\HomeController@index')->name('home');
+
+
+Route::namespace('App\Http\Controllers')->group(function () {
+    Auth::routes();
+});
