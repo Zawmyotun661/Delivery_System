@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use App\Models\Country;
+use App\Models\Township;
 
 class PackageController extends Controller
 {
@@ -15,9 +17,10 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $country= Country::select('name')->get();
+        // $country= Country::select('name')->get();
         $packages =Package::all();
-        return view('package.index',compact(['packages','country']));
+       
+        return view('package.index',compact('packages'));
     }
 
     /**
@@ -28,7 +31,9 @@ class PackageController extends Controller
     public function create()
     {
         $country= Country::select('name')->get();
-        return view('package.create',compact('country'));
+        $city=City::select('name')->get();
+        $township=Township::select('name')->get();
+        return view('package.create',compact('country','city','township'));
        
     }
 
@@ -42,6 +47,8 @@ class PackageController extends Controller
     {
         $input = $request->all();
         $input['country'] = $request->input('country');
+        $input['city'] = $request->input('city');
+        $input['township'] = $request->input('township');
         Package::create($input);
         return redirect('packages');
     }
@@ -65,7 +72,13 @@ class PackageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $package = Package::find($id);
+
+
+        $country= Country::select('name')->get();
+        $city=City::select('name')->get();
+        $township=Township::select('name')->get();
+        return view('package.edit',compact('package','country','city','township'));
     }
 
     /**
@@ -77,7 +90,14 @@ class PackageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $input = $request->all();
+        $input['country'] = $request->input('country');
+        $input['city'] = $request->input('city');
+        $input['township'] = $request->input('township');
+        Package::find($id)->update($input);
+        return redirect('packages')->with('successAlert','You Have Successfully updated');
+       
     }
 
     /**
@@ -88,6 +108,8 @@ class PackageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        Package::find($id)->delete();
+        return redirect('packages')->with('successAlert','You Have Successfully Deleted');;
     }
 }

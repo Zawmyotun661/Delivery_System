@@ -24,7 +24,7 @@
         <div class="row">
             
             <div class="col-md-12">
-                <h5 class="text-center">Driver Lists</h5>
+                <h5 class="text-center">Countries</h5>
                 <a href="{{url('country/create')}}">
                     <button class="btn btn-primary btn-sm float-right mb-2">
                         <i class="fa fa-plus-circle"></i> Add New

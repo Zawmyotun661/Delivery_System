@@ -19,9 +19,15 @@ use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
 Route::get('/', function () {
     return view('auth.login');
 });
+/////////////////////////////DDDDDDDDDDDDD____DASGBOARD//////////////////////////
 Route::get('/admin','App\Http\Controllers\admin\AdminDashboardController@index');
+Route::get('/customer','App\Http\Controllers\Customer\CustomerDashboardController@index');
+
+/////////////////////////////////////////////////////////////////////////////////////
 Route::get('/clients','App\Http\Controllers\UserController@index');
 Route::resource('/country','App\Http\Controllers\CountryController');
+Route::resource('/city','App\Http\Controllers\CityController');
+Route::resource('/township','App\Http\Controllers\TownshipController');
 // Route::resource('/companies', 'App\Http\Controllers\CompanyController');
 //  Route::resource('/clients', 'App\Http\Controllers\ClientController');
  Route::resource('/drivers', 'App\Http\Controllers\DriverController');

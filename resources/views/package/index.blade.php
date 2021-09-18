@@ -22,14 +22,21 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
+          
+            <div class="col-md-12">
                 <h5 class="text-center">Package Lists</h5>
                 <a href="{{url('packages/create')}}">
-                    <button class="btn btn-primary btn-sm float-right mb-2">
+                    <button class="btn btn-primary btn-sm  mb-2">
                         <i class="fa fa-plus-circle"></i> Add New
                     </button>
                 </a>
+                @if(Session('successAlert'))
+                    <div class="alert alert-secondary alert-dismissible show fade">
+                        <strong>{{Session('successAlert')}}</strong>
+                       
+
+                    </div>
+                @endif
                 <table class="table table-bordered table.hover">
                     <thead>
                         <tr>
@@ -37,36 +44,46 @@
                             <th>Package Name</th>
                             <th>Package Size</th>
                             <th>Package Type</th>
-                            <th>Package location</th>
-                            <th>Country</th>
+                           <th>Country </th>
+                           <th>City </th>
+                           <th>Township </th>
                             <th>Actions</th>
 
                         </tr>
                     </thead>
                     <tbody>
+                       
                         @foreach($packages as $package)
-                      
-                     
 
                         <tr>
                             <td>{{ $package -> id }}</td>
                             <td>{{ $package -> package_name }}</td>
                             <td>{{ $package -> package_size }}</td>
                             <td>{{ $package -> package_type }}</td>
-                            <td>{{ $package -> package_location }}</td>
-                            <!-- <td>{{ $country -> name }}</td> -->
+                            <td>{{ $package -> country }}</td>
+                            <td>{{ $package -> city }}</td>
+                            <td>{{ $package -> township }}</td>
+                            
+                         
                             <td>
-                                <button class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</button>
-                                <button clas class="btn btn-danger btn-sm"s=""> <i class="fa fa-trash"></i> Delete</button>
+                                <form action="{{url('packages/'.$package->id)}}" method="POST">
+                                @method('DELETE')
+                                     @csrf
+                                <a href="{{url('packages/'.$package->id.'/edit')}}">
+                                <button type="button" class="btn btn-success btn-sm">
+                                    <i class="fa fa-edit"></i> Edit</button>
+                                </a>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm ('Are you sure want to Delete?')"> 
+                                    <i class="fa fa-trash"></i> Delete</button>
+                                </form>
                             </td>
                             
                         </tr>
-                       
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-2"></div>
+         
         </div>
     </div>
 

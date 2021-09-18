@@ -5,15 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Package extends Model
+class City extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'package_name',
-        'package_size',
-        'package_type',
-        'country',
-        'city',
-        'township',
+        'name',
+       
     ];
 }

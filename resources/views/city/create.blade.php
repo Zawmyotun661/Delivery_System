@@ -8,10 +8,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
  integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-    <title>Country Register</title>
+    <title>City Register</title>
     <style> 
     body{
-        padding: 100px;
+        padding: 30px;
     }
 </style>
 </head>
@@ -20,11 +20,11 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <form action="{{url ('country') }}" method="POST">
+                <form action="{{url ('city') }}" method="POST">
                     @csrf
-                    <div class="form-group mb-5">
-                <label for="name">Country Name</label>
-                <input type="text" name="name" class="form-control" placeholder="Enter Country Name" 
+                    <div class="form-group">
+                <label for="name">City Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Enter City Name" 
                 value="{{ old('name')}}" required >
                     </div>
                 

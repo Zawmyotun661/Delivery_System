@@ -8,7 +8,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
  integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-    <title>Package Register</title>
+    <title>Package Update</title>
     <style> 
     body{
         padding: 50px;
@@ -23,26 +23,26 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
              
-                <form action="{{url ('packages') }}" method="POST">
-                 
+                <form action="{{url ('packages/'.$package->id) }}" method="POST">
+                    @method('PUT')
                     @csrf
                     <div class="form-group">
                 <label for="package_name">Package Name</label>
                 <input type="text" name="package_name" class="form-control" placeholder="Enter Package Name" 
-                value="{{$package->package_name ?? old('package_name')}}" required >
+                value="{{ $package->title ?? old('package_name')}}" required >
                     </div>
 
                     <div class="form-group">
                 <label for="package_size">Package Size</label>
                 <input type="text" name="package_size" class="form-control"  placeholder="Enter Package Size" 
-                value="{{$package->package_size ?? old('package_size')}}" required>
+                value="{{$package->size ?? old('package_size')}}" required>
                 </div>
 
 
                 <div class="form-group">
                 <label for="package_type">Package Type</label>
                 <input type="text" name="package_type" class="form-control"  placeholder="Enter Package Type" 
-                value="{{ $package->package_type ?? old('package_type')}}" required>
+                value="{{ $package->type ?? old('package_type')}}" required>
                 </div>
 
             
@@ -51,7 +51,7 @@
         
      <select  class="form-select" aria-label="Default select example" name="country">
         @foreach($country as $country)
-         <option value="{{ $country->name}}">{{ $country->name}}</option>
+         <option value="{{$country->name}}">{{ $country->name}}</option>
         @endforeach
     </select>
          
@@ -82,7 +82,7 @@
             
              
                    
-                   <button class="btn btn-primary">Submit</button>
+                   <button class="btn btn-primary">Update</button>
                     
                 </form>
               

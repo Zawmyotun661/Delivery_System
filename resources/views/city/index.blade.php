@@ -12,7 +12,7 @@
  crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-    <title>Client List</title>
+    <title>City</title>
     <style> 
     body{
         padding: 50px;
@@ -24,37 +24,26 @@
         <div class="row">
             
             <div class="col-md-12">
-                <h5 class="text-center">Client Lists</h5>
-                <!-- <a href="{{url('clients/create')}}">
+                <h5 class="text-center">Cities</h5>
+                <a href="{{url('city/create')}}">
                     <button class="btn btn-primary btn-sm float-right mb-2">
                         <i class="fa fa-plus-circle"></i> Add New
                     </button>
-                </a> -->
+                </a>
                 <table class="table table-bordered table.hover">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Client Name</th>
-                            <th>Country</th>
-                            <th>City</th>
-                            <th>Township</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Contact Number</th>
-                            <th>Actions</th>
+                            <th>City Name</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($clients as $client)
+                        @foreach($city as $city)
                         <tr>
-                            <td>{{ $client -> id }}</td>
-                            <td>{{ $client -> name }}</td>
-                            <td>{{ $client -> country }}</td>
-                            <td>{{ $client -> city }}</td>
-                            <td>{{ $client -> township }}</td>
-                            <td>{{ $client -> email }}</td>
-                            <td>{{ $client -> address }}</td>
-                            <td>{{ $client -> phone }}</td>
+                            <td>{{ $city -> id }}</td>
+                            <td>{{ $city -> name }}</td>
+                           
                             <td>
                                 <button class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</button>
                             

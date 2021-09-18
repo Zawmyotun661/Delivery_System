@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         
         $clients =User::all();
-        return view('client.index',compact('clients','country'));
+        return view('client.index',compact('clients'));
        
     }
 }
