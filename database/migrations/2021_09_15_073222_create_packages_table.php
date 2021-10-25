@@ -15,12 +15,23 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->longText('package_name');
-            $table->longText('package_size');
-            $table->longText('package_type');
-            $table->string('country');
-            $table->string('city');
-            $table->string('township');
+            $table->integer('client_id');
+            $table->integer('shopper_id');
+            $table->date('date');
+            $table->string('package_name')->nullable();
+            $table->string('package_size')->nullable();
+            $table->string('receiver_name');
+            $table->text('phone');
+            $table->longText('address');
+            $table->integer('township_id');
+            $table->integer('price');
+            $table->integer('delivery_fee');
+            $table->string('status');
+            $table->string('remark')->nullable();
+            $table->string('image')->nullable();
+            $table->string('payment_status')->nullable();
+            $table->integer('driver_id')->nullable();
+         
             $table->timestamps();
         });
     }

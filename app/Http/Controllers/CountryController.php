@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('isAdmin');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -90,6 +94,7 @@ class CountryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Country::find($id)->delete();
+        return redirect('country')->with('successAlert', 'You Have Successfully Deleted!');
     }
 }

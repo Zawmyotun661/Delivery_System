@@ -10,6 +10,7 @@ class Township extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'cityId',
        
     ];
 }

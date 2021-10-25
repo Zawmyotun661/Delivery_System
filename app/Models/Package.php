@@ -8,12 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Package extends Model
 {
     use HasFactory;
+    protected $table = 'packages';
     protected $fillable = [
+        'client_id',
+        'shopper_id',
+        'date',
         'package_name',
         'package_size',
-        'package_type',
-        'country',
-        'city',
-        'township',
+        'receiver_name',
+        'phone',
+        'address',
+        'township_id',
+        'price',
+        'delivery_fee',
+        'status',
+        'image',
+        'remark',
+        'payment_status',
+        'driver_id',
+      
     ];
 }

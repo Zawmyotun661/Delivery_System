@@ -1,58 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
- integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" 
- integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" 
- crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
-    <title>Driver List</title>
-    <style> 
-    body{
-        padding: 50px;
-    }
-</style>
-</head>
-<body>
-    <div class="container">
+@extends('dashboardTemplate')
+@section('content')
+    <div class="container mt-5">
         <div class="row">
-            
-            <div class="col-md-12">
-                <h5 class="text-center">Driver Lists</h5>
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <div class="row mb-3">
+                    <div class="col-md-6 mx-auto">
+                            <div class="input-group" id="myDiv">
+                                <input class="form-control border-end-0 border" type="search" id="name" placeholder="Filter By Driver Name or Mail" value="{{$search_value}}">
+                                <span class="input-group-append">
+                                    <button class="btn btn-outline-secondary bg-white border-start-0 border ms-n5" id="search">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                    </div>
+                </div>
                 <a href="{{url('drivers/create')}}">
-                    <button class="btn btn-primary btn-sm float-right mb-2">
+                    <button class="btn btn-primary btn-sm mb-2">
                         <i class="fa fa-plus-circle"></i> Add New
                     </button>
                 </a>
+                @if(Session('successAlert'))
+                <div class="alert alert-success alert-dismissible show fade">
+                    <strong>{{Session('successAlert')}}</strong>
+                    <button class="close" data-dismiss="alert">&times;</button>
+                </div>
+                @endif
                 <table class="table table-bordered table.hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Client Name</th>
+                            <th>Driver Name</th>
+                            <th>Email</th>
                             <th>Address</th>
                             <th>Contact Number</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table_body">
                         @foreach($drivers as $driver)
                         <tr>
-                            <td>{{ $driver -> id }}</td>
-                            <td>{{ $driver -> name }}</td>
-                            <td>{{ $driver -> address }}</td>
-                            <td>{{ $driver -> phone }}</td>
+                            <td>{{ $driver ->name }}</td>
+                            <td>{{ $driver->email }}</td>
+                            <td>{{ $driver ->address }}</td>
+                            <td>{{ $driver ->phone }}</td>
                             <td>
-                                <button class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</button>
-                            
-                                <button clas class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i> Delete</button>
-                            </td>
-                            
+                                <a href="{{url('drivers/'.$driver->user_id.'/edit')}}" style="text-decoration: none;">
+                                    <button class="btn btn-success btn-sm"><i class="fa fa-edit"></i></button>
+                                </a>
+                                    <a href="{{url('drivers/'.$driver->user_id.'/destroy')}}">
+                                        <button class="btn btn-danger btn-sm" onclick="deleteFunction({{$driver->user_id}})"> <i class="fa fa-trash"></i></button>
+                                    </a>
+                        </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -62,9 +61,62 @@
         </div>
     </div>
 
-
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" 
-integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-</body>
-</html>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var search_value = document.getElementById('name').value;
+        // if(search_value != ''){
+        //     alert('a');
+        // }
+        $('#search').on('click', function(){
+            var query = $('#name').val();
+            var tableBody = document.getElementById('table_body');
+            tableBody.innerHTML = '';
+            $.ajax({
+                url:'{{route('search')}}',
+                type:'GET',
+                data:{'name':query},
+                success:function(data) {
+                    console.log(data)
+                    data.forEach(item => {
+                    tableBody.innerHTML += 
+                    '<tr>'+
+                    '<td>'+item.name+'</td>'+
+                    '<td>'+item.email+'</td>'+
+                    '<td>'+item.address+'</td>'+
+                    '<td>'+item.phone+'</td>'+
+                    '<td><button type="button" class="btn btn-success btn-sm" onclick="editFunction('+item.user_id+')">'+
+                    '<i class="fa fa-edit"></i></button>'+
+                    '<button clas class="btn btn-danger btn-sm ml-2" onclick="deleteFunction('+item.user_id+')"> <i class="fa fa-trash"></i></button></td>'+
+                    '</tr>';
+                    })
+                }
+            })
+        }); 
+    });
+    //Edit
+    function editFunction(userId) {
+        window.location.href = 'drivers/'+userId+'/edit';
+        var container = document.getElementById('myDiv');
+        var content = container.innerHTML;
+        container.innerHTML = content;  
+    }
+    function deleteFunction(id) 
+{
+    event.preventDefault();
+    swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        confirmButtonColor: '#eea025',
+        cancelButtonColor: '#b1abab',
+    }).then((result) => {
+        if(result.isConfirmed){
+            window.location.href = 'drivers/'+id+'/destroy';
+        }
+    })
+}
+    </script>
+@endsection

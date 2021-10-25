@@ -1,81 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
- integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+@extends('dashboardTemplate')
 
-    <title>Admin Dashboard</title>
-    <style> 
-    body{
-        padding: 30px;
-    }
-</style>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="col-md-12">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Delivery_System</a>
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{url('/admin')}}">Home</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Client
-          </a>
-          <ul class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{{url('clients')}}">Client Lists</a></li>
-            
-          </ul>
-        </li>
-       
+@section('content')
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+            <div class="row mb-3">
+              <div class="col-md-6 mx-auto">
+                <form action="{{ url('search_users') }}" method="GET">
+                  @csrf
+                  <div class="input-group">
+                      <input class="form-control border-end-0 border" value="{{ isset($searchData) ? $searchData: '' }}" type="search" name="search_data" id="search_value" placeholder="Search User">
+                      <span class="input-group-append">
 
-
-        
-        <li class="nav-item">
-          <a class="nav-link text-white" href="{{url('clients')}}">Client</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ms-auto me-4 mb-lg-0">
-    
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-           {{Auth::user()->name}}
-          </a>
-          <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-            <form action="{{url('/logout')}}" method="POST">
-              @csrf
-              <button type="submit" class="dropdown-item"> Logout </button>
-            </form>
-            
-          </ul>
-        </li>
-        
-      </ul>
-    
-    </div>
-  </div>
-
-</nav>
-
+                              <button class="btn btn-primary border ml-5 px-2" id="search" 
+                                    style="width: 130px; padding:10px; border-radius:20px">
+                                        <i class="fa fa-search">  Search</i>
+                                    </button>
+                      </span>
+                  </div>
+                </form>
+               
+              </div>
+          </div>
+          {{-- <h5 >Users</h5> --}}
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        {{-- <th>ID</th> --}}
+                        <th>Name</th>
+                        <th>Mail</th>
+                        <th>Roles</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($users as $user)
+                    <tr>
+                        {{-- <td>{{$user->id}}</td> --}}
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->email}}</td>
+                        <td>
+                        @foreach ($user->roles as $role)
+                           <span class="badge" style="background:#1F1C2C ;">{{$role->name}}</span>
+                        
+                        @endforeach
+                    </td>
+                        <td><a href="{{url('admin/'.$user->id.'/manage-role')}}" style="background: #928DAB;" class="btn btn-sm">Manage Roles</a></td>
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
         </div>
-    </div>  
+    </div>
+</div>
+@endsection
 
-
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" 
-integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-</body>
-</html>

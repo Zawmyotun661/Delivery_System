@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 
 class CustomerDashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('isClient'); 
+    }
     public function index(){
     
         return view('Customer.customer');
-        }
+    }
 }

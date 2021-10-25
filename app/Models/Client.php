@@ -9,17 +9,11 @@ class Client extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
-        'country',
-        'city',
-        'township',
-        'email',
-        'password',
-        'address',
-        'phone'
+        'user_id',
+        'total_package',
     ];
-    // protected $hidden = [
-    //     'password',
-    //     'remember_token',
-    // ];
+    public function users()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
 }

@@ -9,9 +9,16 @@ class Driver extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
-        'address',
-        'phone'
+        'user_id',
+        'client_id',
+        // 'name',
+        // 'email',
+        // 'address',
+        // 'phone'
     ];
+    public function users()
+    {
+        return $this->belongsTo('App\Models\User','user_id');
+    }
 
 }

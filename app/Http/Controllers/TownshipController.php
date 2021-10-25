@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Township;
+use App\Models\City;
 use Illuminate\Http\Request;
 
 class TownshipController extends Controller
@@ -26,7 +27,8 @@ class TownshipController extends Controller
      */
     public function create()
     {
-        return view('township.create');
+        $cities = City::all();
+        return view('township.create', compact('cities'));
     }
 
     /**
@@ -40,10 +42,12 @@ class TownshipController extends Controller
         
         $request->validate([
             'name' => 'required',
+            'cityId' => 'required',
           
         ]);
         Township::create([
             'name' => $request->name,
+            'cityId' => $request->cityId,
            
         ]);
         return redirect('township');
@@ -91,6 +95,22 @@ class TownshipController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Township::find($id)->delete();
+        return redirect('township')->with('successAlert','You Have Successfully Deleted');
+    }
+
+    public function search(Request $request)
+    {
+        if($request->ajax()){
+            $searchData = $request->name;
+            $data =  Township::
+                            where(function($query) use($searchData){
+                                $query->where('name', 'like', '%'.$searchData.'%');
+                               
+                            })->get();
+                          
+                            
+            return response()->json($data,200);
+        }
     }
 }

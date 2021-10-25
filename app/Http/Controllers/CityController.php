@@ -91,6 +91,17 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        City::find($id)->delete();
+        return redirect('city')->with('successAlert','You Have Successfully Deleted');
+    }
+    public function search(Request $request)
+    {
+        if($request->ajax()){
+            $searchData = $request->name;
+            $data =  City::where(function($query) use($searchData){
+                                $query->where('name', 'like', '%'.$searchData.'%');
+                            })->get();
+            return response()->json($data,200);
+        }
     }
 }
