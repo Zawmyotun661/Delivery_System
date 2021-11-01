@@ -4,6 +4,7 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-7">
+            <h5 class="mb-4">Deposit Lists</h5>
                 <a href="{{url('shoppers/'.$id.'/new-deposit')}}">
                     <button class="btn btn-primary btn-sm mb-2">
                         <i class="fa fa-plus-circle"></i> Add New

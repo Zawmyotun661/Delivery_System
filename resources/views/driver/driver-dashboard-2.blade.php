@@ -67,6 +67,7 @@
                         <option value="Paid" {{$package->status=='Paid' ? 'selected' : ''}}>Paid</option>
                         <option value="Processing" {{$package->status=='Processing' ? 'selected' : ''}}>Processing</option>
                         <option value="Delivered" {{$package->status=='Delivered' ? 'selected' : ''}}>Delivered</option>
+                        <option value="Pickup" {{$package->status=='Pickup' ? 'selected' : ''}}>Pick Up</option>
                         <option value="Error" {{$package->status=='Error' ? 'selected' : ''}}>Error</option>
                     </select>
                 </div>  

@@ -4,7 +4,8 @@
         <div class="row">
           <div class="col-md-2"></div>
             <div class="col-md-10">
-                <div class="row mb-3">
+            <h5>Package Lists</h5>
+                <div class="row mb-3 mt-5">
                     <label for="date"> Filter by Date</label>
                     <div class="form-group col-md-3">
                         <input type="date" name="date" class="form-control"  placeholder="Enter Date" id="date">
@@ -15,6 +16,7 @@
                             <option value="New">New</option>
                             <option value="Paid">Paid</option>
                             <option value="Processing">Processing</option>
+                            <option value="Pickup">Pick Up</option>
                             <option value="Delivered">Delivered</option>
                             <option value="Error">Error</option>
                         </select>
@@ -139,6 +141,9 @@
                             @if($package->status=="Delivered")
                             <td class="text-success"><strong>{{ $package -> status }}</strong></td>
                             @endif
+                            @if($package->status=="Pickup")
+                            <td style=" color:#ad5389"><strong>{{ $package -> status }}</strong></td>
+                            @endif
                             @if($package->status=="Error")
                             <td class="text-danger"><strong>{{ $package -> status }}</strong></td>
                             @endif
@@ -221,6 +226,9 @@ $(document).ready(function(){
                 }
                 if(item.status == 'Processing'){
                     status_color = '<td class="text-warning"><strong>'+item.status+'</strong></td>'
+                }
+                if(item.status == 'Pickup'){
+                    status_color = '<td style=" color:#ad5389"><strong>'+item.status+'</strong></td>'
                 }
                 if(item.status == 'Error'){
                     status_color = '<td class="text-danger"><strong>'+item.status+'</strong></td>'

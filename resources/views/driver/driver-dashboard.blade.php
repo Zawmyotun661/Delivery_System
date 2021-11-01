@@ -77,6 +77,9 @@
                             @if($package->status=="Delivered")
                             <td class="text-success"><strong>{{ $package -> status }}</strong></td>
                             @endif
+                            @if($package->status=="Pickup")
+                            <td style=" color:#ad5389"><strong>{{ $package -> status }}</strong></td>
+                            @endif
                             @if($package->status=="Error")
                             <td class="text-danger"><strong>{{ $package -> status }}</strong></td>
                             @endif
@@ -137,6 +140,9 @@
                                 @if($package->status=="Delivered")
                                 <td class="text-success"><strong>{{ $package -> status }}</strong></td>
                                 @endif
+                                @if($package->status=="Pickup")
+                            <td style=" color:#ad5389"><strong>{{ $package -> status }}</strong></td>
+                            @endif
                                 @if($package->status=="Error")
                                 <td class="text-danger"><strong>{{ $package -> status }}</strong></td>
                                 @endif

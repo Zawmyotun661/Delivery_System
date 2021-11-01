@@ -32,6 +32,12 @@ class ClientController extends Controller
                         ->whereHas('roles', function($query) {
                         $query->where('name', 'Client');
                         })->get();
+        foreach($clients as $client){
+            $client_id = $client->id;
+            $packages = Package::where('packages.client_id', $client_id)
+                                ->count();
+            $client->created_pack = $packages;
+        }
         return view('client.index',compact('clients'));
     }
 
@@ -175,6 +181,12 @@ class ClientController extends Controller
                                 $query->where('users.name', 'like', '%'.$searchData.'%')
                                 ->orWhere('users.email', 'like', '%'.$searchData.'%');
                             })->get();
+            foreach($data as $result){
+                $client_id = $result->id;
+                $package = Package::where('packages.client_id', $client_id)
+                                    ->count();
+                $result->created_pack = $package;
+            }
                           
                             
             return response()->json($data,200);

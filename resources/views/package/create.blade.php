@@ -74,6 +74,7 @@
                             <option value="Paid">Paid</option>
                             <option value="Processing">Processing</option>
                             <option value="Delivered">Delivered</option>
+                            <option value="Pickup">Pick Up</option>
                             <option value="Error">Error</option>
                         </select>
                         <div class="errors" id="statusError"></div>

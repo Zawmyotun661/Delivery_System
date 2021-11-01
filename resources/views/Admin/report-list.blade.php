@@ -4,7 +4,8 @@
         <div class="row">
           <div class="col-md-2"></div>
             <div class="col-md-10">
-                <div class="row mb-3">
+            <h5>Report Lists</h5>
+                <div class="row mb-3 mt-5">
                     <label for="date"> Filter by Date</label>
                     <div class="form-group col-md-3">
                         <input type="date" name="date" class="form-control"  placeholder="Enter Date" id="date">
@@ -16,6 +17,7 @@
                             <option value="Paid">Paid</option>
                             <option value="Processing">Processing</option>
                             <option value="Delivered">Delivered</option>
+                            <option value="Pickup">Pick Up</option>
                             <option value="Error">Error</option>
                         </select>
                     </div>
@@ -69,7 +71,7 @@
                             <td >{{ $report -> date }}</td>
                             <td>{{ $report->client_name }}</td>
                             <td>{{ $report->cus_name }}</td>
-                            <td >{{ $report -> package_name }}</td>
+                            <td >{{ $report -> receiver_name }}</td>
                             <td>{{ $report -> phone }}</td>
                             <td>{{ $report -> address }}</td>
                             <td>{{ $report -> name }}</td>            {{-- show township name --}}
@@ -90,11 +92,14 @@
                             @if($report->status=="Delivered")
                             <td class="text-success"><strong>{{ $report -> status }}</strong></td>
                             @endif
+                            @if($report->status=="Pickup")
+                            <td style=" color:#ad5389"><strong>{{ $report -> status }}</strong></td>
+                            @endif
                             @if($report->status=="Error")
                             <td class="text-danger"><strong>{{ $report -> status }}</strong></td>
                             @endif
-                            <td >{{ $report -> package_size }}</td>
-                            <td>{{ $report -> receiver_name }}</td>
+                            <td >{{ $report -> package_name }}</td>
+                            <td>{{ $report -> package_size }}</td>
                             <td>{{ $report -> remark }}</td>
                             @if( $report->image)
                             <td> <img src="{{ asset('image/'. $report->image) }}" style="width: 100px; height:100px;"></a></td>
@@ -152,6 +157,9 @@ $(document).ready(function(){
                 }
                 if(item.status == 'Processing'){
                     status_color = '<td class="text-warning"><strong>'+item.status+'</strong></td>'
+                }
+                if(item.status == 'Pickup'){
+                    status_color = '<td style=" color:#ad5389"><strong>'+item.status+'</strong></td>'
                 }
                 if(item.status == 'Error'){
                     status_color = '<td class="text-danger"><strong>'+item.status+'</strong></td>'

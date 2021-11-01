@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-10">
+            <h5 class="mb-5">Customer Lists</h5>
                 {{-- <h5 class="text-center">Customer</h5> --}}
                 <a href="{{url('shoppers/create')}}">
                     <button class="btn btn-primary btn-sm mb-2">

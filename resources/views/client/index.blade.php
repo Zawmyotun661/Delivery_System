@@ -4,6 +4,7 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-10">
+            <h5>Client Lists</h5>
                 <div class="row mb-3">
                      <div class="col-md-6 mx-auto">
                             <div class="input-group" id="myDiv">
@@ -38,6 +39,7 @@
                             <th>Address</th>
                             <th>Contact Number</th>
                             <th>Total Package</th>
+                            <th>Total Created Package</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -49,6 +51,7 @@
                             <td>{{ $client -> address }}</td>
                             <td>{{ $client -> phone }}</td>
                             <td>{{ $client -> total_package }}</td>
+                            <td>{{ $client -> created_pack }}</td>
                             <td>
                                 <a href="{{url('clients/'.$client->id.'/edit')}}" style="text-decoration: none;">
                                     <button type="button" class="btn btn-success btn-sm">
@@ -87,6 +90,7 @@
                     '<td>'+item.address+'</td>'+
                     '<td>'+item.phone+'</td>'+
                     '<td>'+item.total_package+'</td>'+
+                    '<td>'+item.created_pack+'</td>'+
                     '<td><button type="button" class="btn btn-success btn-sm" onclick="editFunction('+item.id+')">'+
                     '<i class="fa fa-edit"></i></button>'+
                     '<button clas class="btn btn-danger btn-sm ml-2" onclick="deleteFunction('+item.id+')"> <i class="fa fa-trash"></i></button></td>'+

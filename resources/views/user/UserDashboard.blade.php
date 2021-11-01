@@ -68,7 +68,9 @@
                 data:{'name':query},
                 success:function(data) {
                     console.log(data)
-                    if( query){
+                   
+                    if( data===query){
+                        console.log("if work")
                     data.forEach(item => {
                     card.innerHTML += 
                     '<div class="col">' +
@@ -87,6 +89,43 @@
                     '</div>'+
                     '</div>';
                     })
+                } 
+                 else if(!query==data) { 
+                     console.log("else if")
+                    card.innerHTML += 
+                    '<div class="col">' +
+                    '<div class="card l-bg-blue-dark">'+
+                    ' <div class="card-body ">'+  
+                   '<div class="mb-4">'+
+                    '<h5>'+   'Please Type Your Phone Number Correctly!!' +'</h5>'+
+                    
+                   
+                  '</div>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>';
+                 
+                }
+                else  { 
+                    data.forEach(item => {
+                    card.innerHTML += 
+                    '<div class="col">' +
+                    '<div class="card l-bg-blue-dark">'+
+                    ' <div class="card-body ">'+  
+                   '<div class="mb-4">'+
+                    '<h5>'+   '<label> Package Name </label>'+ ' '+ ':: '+item.package_name+'</h5>'+
+                    
+                    '<h5>'+    '<label> Receiver Name </label>'+ ' '+ ':: ' +item.receiver_name+'</h5>'+
+                 
+                    '<h5>' +   '<label> Delivery Status </label>'+ ' '+ ':: '+item.status+'</h5>'+
+                    '<h5>' +   '<label> Driver Name </label>'+ ' '+ ':: '+item.driver_name+'</h5>'+
+                   
+                  '</div>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>';
+                    })
+                 
                 }
             }
         })
