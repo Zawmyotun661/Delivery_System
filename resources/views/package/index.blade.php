@@ -6,10 +6,32 @@
             <div class="col-md-10">
             <h5>Package Lists</h5>
                 <div class="row mb-3 mt-5">
-                    <label for="date"> Filter by Date</label>
+                @if (!$isShopper)
+                <!-- <div class="row">
                     <div class="form-group col-md-3">
-                        <input type="date" name="date" class="form-control"  placeholder="Enter Date" id="date">
+                    <label for="date"> Filter by Start_Date</label>
+                 
+                        <input type="date" name="date" class="form-control"  placeholder="Enter Date" id="startdate">
                     </div>
+                    <div class="form-group col-md-3">
+                    <label for="date"> Filter by End_Date</label>
+                  
+                        <input type="date" name="date" class="form-control"  placeholder="Enter Date" id="enddate">
+                    </div>
+                    </div> -->
+                    <label for="date"> Filter by Deliver Date</label>
+                    <div class="form-group col-md-3">
+                        <input type="date" name="date" class="form-control p-1"  placeholder="Enter Date" id="updateDate">
+                    </div>
+                    @endif
+                    <label for="date"> Filter by Date</label>
+
+
+                    <div class="form-group col-md-3">
+                        <input type="date" name="date" class="form-control p-1"  placeholder="Enter Date" id="date">
+                    </div>
+                    
+                  
                     <div class="form-group col-md-3">
                         <select  class="form-select" aria-label="Default select example" name="status" id="status">
                             <option value="">Filter by Delivery Status</option>
@@ -25,35 +47,56 @@
                     @if (!$isShopper)
                     <div class="col-md-6 mx-auto">
                             <div class="input-group" id="myDiv">
-                                <input class="form-control border" type="search" id="name" placeholder="Filter by Driver Name or Township" value="" style="border-radius: 3px;">
+                                <input class="form-control border" type="search" id="name" placeholder="Filter by Customer & Phone " value="" style="border-radius: 3px;">
                                 <div class="pl-4">
-                                    <button class="btn btn-primary border px-2" id="search" style="width: 130px; padding:10px;">
+                                    <button class="btn btn-primary border px-2" id="search" style="width: 130px; padding:10px; border-radius: 20px">
                                         <i class="fa fa-search">Search</i>
                                     </button>
                                 </div>
                             </div>
                     </div>
+                    
+                    <div class="form-group col-md-3">
+                        <select  class="form-select bg-secondary" aria-label="Default select example"  id="driver_name">
+                            <option value="">Filter by Driver </option>
+                            @foreach($driver as $driver)
+                            <option value="{{$driver->name}}">{{$driver->name}}</option>
+                          @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <select  class="form-select bg-dark" aria-label="Default select example"  id="township_name">
+                            <option value="">Filter by Township </option>
+                            @foreach($township as $town)
+                            <option value="{{$town->name}}">{{$town->name}}</option>
+                          @endforeach
+                        </select>
+                    </div>
                     @else
+              
                     <div class="col-md-6 mx-auto">
                         <div class="input-group" id="myDiv">
                             <input class="form-control border" type="search" id="name" placeholder="Filter by Township" value="" style="border-radius: 3px;">
                             <div class="pl-4">
-                                <button class="btn btn-primary border px-2" id="search" style="width: 130px; padding:10px;">
+                                <button class="btn btn-primary border px-2" id="search" style="width: 130px; padding:10px; border-radius:20px">
                                     <i class="fa fa-search">Search</i>
                                 </button>
                             </div>
                         </div>
-                </div>
+                    </div>
                     @endif
                 </div>
                 @if (!$isShopper)
                 <div id="download_package">
-                    <a href="{{url('export')}}">
-                        <button class="btn btn-success btn-sm  mb-2">
+                    <a href="{{url('export')}}" style="text-decoration: none;">
+                        <button class="btn btn-success btn-sm  mb-2 p-2">
                             <i class="fas fa-file-download"></i>  Download Excel
                         </button>
                     </a>
+
+                    {{-- <span id="driverTotal"></span> --}}
                 </div>
+                {{-- <div id="driverTotal"></div> --}}
                 @else
                 @if($new_pack == 1)
                 <a href="{{url('shoppers/'.$id.'/new-package')}}" style="text-decoration: none;">
@@ -72,11 +115,11 @@
                             <i class="fas fa-file-download"></i>  Download Excel
                         </button>
                     </a>
-                    <a href="{{url('shopperspdf/'.$id.'/export')}}">
+                    <!-- <a href="{{url('shopperspdf/'.$id.'/export')}}">
                         <button class="btn btn-success btn-sm  mb-2">
                             <i class="fas fa-file-download"></i>  Download PDF
                         </button>
-                    </a>
+                    </a> -->
                 </div>
                 @endif
                 @if(Session('successAlert'))
@@ -94,13 +137,17 @@
                     <thead>
                         <tr>
                             <th class="px-5"> Date </th>
+                            @if (!$isShopper)
+                            <th class="px-3">Customer Name/Online Shop Name</th>
+                            @endif
                             <th class="px-3">Receiver Name</th>
                             <th class="px-5">Receiver Phone Number </th>
                             <th class="px-5">Receiver Address</th>
                             <th class="px-3">Township </th>
                             <th class="px-3">Amount </th>
                             <th class="px-3">Delivery Fee </th>
-                            <th class="px-3">Deposit</th>
+                        
+                            <!-- <th class="px-3">Deposit</th> -->
                             @if (!$isShopper)
                             <th class="px-3">Driver Name </th>
                             <th class="px-3">Payment Status </th>
@@ -109,6 +156,11 @@
                             <th class="px-3"> Package Name </th>
                             <th> Package Size </th>
                             <th class="px-3">Remark</th>
+                         
+                            @if(!$isShopper)
+                            <th class="px-5">Update Date</th>
+                            <th class="px-5">Actions</th>
+                            @endif
                             @if ($isShopper)
                             <th class="px-5">Actions</th>
                             @endif
@@ -118,13 +170,17 @@
                         @foreach($packages as $package)
                         <tr>
                             <td >{{ $package -> date }}</td>
+                            @if (!$isShopper)
+                            <td>{{ $package -> cus_name }}</td>
+                            @endif
                             <td>{{ $package-> receiver_name }}</td>
                             <td>{{ $package -> phone }}</td>
                             <td>{{ $package -> address }}</td>
                             <td>{{ $package -> name }}</td>            {{-- show township name --}}
                             <td>{{ $package -> price }}</td>
                             <td>{{ $package -> delivery_fee }}</td>
-                            <td>{{ $package -> deposit_amount }}</td>
+                            
+                            <!-- <td>{{ $package -> deposit_amount }}</td> -->
                             @if (!$isShopper)
                             <td>{{ $package -> driver_name}}</td>
                             <td>{{ $package -> payment_status}}</td>
@@ -149,8 +205,18 @@
                             @endif
                             <td >{{ $package -> package_name }}</td>
                             <td >{{ $package -> package_size }}</td>
-                            {{-- <td>{{ $package -> status }}</td> --}}
-                            <td>{{ $package -> remark }}</td>
+                            <td>{{ $package -> remark }}</td> 
+                         
+                            @if(!$isShopper)
+                            <td>{{$package->updated_at}}</td>
+                            <td>
+                                <a href="{{url('package/'.$package->id.'/edit')}}" style="text-decoration: none;">
+                                <button type="button" class="btn btn-success btn-sm">
+                                    <i class="fa fa-edit"></i> </button>
+                                </a>
+                            </td>
+                            @endif
+
                             @if ($isShopper)
                             <td>
                                 <a href="{{url('shoppers/'.$id.'/'.'package/'.$package->id.'/edit')}}" style="text-decoration: none;">
@@ -168,18 +234,33 @@
                     </tbody>
                     <tfoot id="table_footer">
                     @if ($isShopper)
-                        <tr>
-                            <th>Total Amount</th>
-                            <th colspan="12">{{$total}}</th>
+                        <!-- <tr>
+                            <th>Total Delivery</th>
+                            <th colspan="12">{{$total_delivery}}</th>
+                        </tr>
+                       -->
+                       <tr>
+                            <th>Total_Amount</th>
+                            <th colspan="12">{{$amount_total}}</th>
                         </tr>
                         <tr>
-                            <th>Total Delivery Fee</th>
+                            <th>Total Delivery</th>
                             <th colspan="12">{{$total_delivery}}</th>
                         </tr>
                         <tr>
-                            <th>Payable Amount</th>
-                            <th colspan="12">{{$toget}}</th>
+                            <th>Paid Delivery(OS)</th>
+                            <th colspan="12">{{$amount_delivery}}</th>
                         </tr>
+                        
+                        <tr>
+                            <th>Final_Amount</th>
+                            <th colspan="12">{{$final_amount}}</th>
+                        </tr>
+                        <tr>
+                            <th>Payable_Amount</th>
+                            <th colspan="12">{{$final_deposit}}</th>
+                        </tr>
+                     
                     @endif
                     </tfoot>
                 </table>
@@ -197,11 +278,20 @@ $(document).ready(function(){
     $('#search').on('click', function(){
         var query = '';
          query = $('#name').val();
+         var startdate = '';
+         startdate = $('#startdate').val();
+         var enddate = '';
+         enddate = $('#enddate').val();
+         var driver_name = '';
+         driver_name = $('#driver_name').val();
+         var township_name = '';
+         township_name = $('#township_name').val();
         var date = '';
          date = $('#date').val();
+         var update = '';
+         updateDate = $('#updateDate').val();
          var status = '';
          status = $('#status').val();
-        //  var deposit_amount = '';
         var tableBody = document.getElementById('table_body');
         tableBody.innerHTML = '';
         var tableFooter = document.getElementById('table_footer');
@@ -209,9 +299,9 @@ $(document).ready(function(){
         $.ajax({
             url:'{{route('search_package')}}',
             type:'GET',
-            data:{'word':query, 'searchDate':date, 'status':status, 'isShopper':{{$isShopper}}, 'shopperId': {{$id ?? ''}}},
-            success:function(data) {
-                console.log(data)
+            data:{'word':query,'startdate':startdate,'enddate':enddate,'driver' :driver_name,'township':township_name, 'searchDate':date, 'updateDate':updateDate,'status':status, 'isShopper':{{$isShopper}}, 'shopperId': {{$id ?? ''}}},
+            success:function(data) {  
+                
                 var package = data.package;
                 package.forEach(item => {
                 var status_color = '';
@@ -243,9 +333,8 @@ $(document).ready(function(){
                     '<td>'+item.name+'</td>'+
                     '<td>'+item.price+'</td>'+
                     '<td>'+item.delivery_fee+'</td>'+
-                    '<td>'+item.deposit_amount+'</td>'+
+                    
                     status_color
-                    // '<td>'+item.status+'</td>'+
                     +'<td>'+item.package_name+'</td>'+
                     '<td>'+item.package_size+'</td>'+
                     '<td>'+item.remark+'</td>'+
@@ -263,20 +352,25 @@ $(document).ready(function(){
                     tableBody.innerHTML += 
                     '<tr>'+
                     '<td>'+item.date+'</td>'+
+                    '<td>'+item.cus_name+'</td>'+
                     '<td>'+item.receiver_name+'</td>'+
                     '<td>'+item.phone+'</td>'+
                     '<td>'+item.address+'</td>'+
                     '<td>'+item.name+'</td>'+
                     '<td>'+item.price+'</td>'+
                     '<td>'+item.delivery_fee+'</td>'+
-                    '<td>'+item.deposit_amount+'</td>'+
+                 
                     '<td>'+item.driver_name+'</td>'+
                     '<td>'+item.payment_status+'</td>'+
                     status_color
                     +'<td>'+item.package_name+'</td>'+
                     '<td>'+item.package_size+'</td>'+
                     '<td>'+item.remark+'</td>'+
+                    '<td>'+item.updated_at+'</td>'+
+                    '<td><button type="button" class="btn btn-success btn-sm" onclick="editFunction('+item.id+')">'+
+                    '<i class="fa fa-edit"></i></button>'+
                     '</tr>';
+                  
                 } 
                 })
                 if({{$isShopper}} == 1){
@@ -288,17 +382,28 @@ $(document).ready(function(){
                     tableFooter.innerHTML +=
                         '<tr>'+
                         '<th>Total Amount</th>'+
-                        '<th colspan="12">'+data.total+'</th>'+
+                        '<th colspan="12">'+data.total_amount+'</th>'+
                         '</tr>'+
                         '<tr>'+
-                        '<th>Total Delivery Fee</th>'+
+                        '<th>Total Delivery</th>'+
                         '<th colspan="12">'+data.total_delivery+'</th>'+
                         '</tr>'+
                         '<tr>'+
+                        '<th>Paid Delivery(OS)</th>'+
+                        '<th colspan="12">'+data.paid_delivery+'</th>'+
+                        '</tr>'+
+                        '<tr>'+
+                        '<th>Final Amount</th>'+
+                        '<th colspan="12">'+data.toget+'</th>'+
+                        '</tr>'+
+                        '<tr>'+
                         '<th>Payable Amount</th>'+
-                        '<th colspan="12">'+data.payable+'</th>'+
+                        '<th colspan="12">'+data.total+'</th>'+
                         '</tr>';
+                      
+                       
                 }else {
+                    tableFooter.innerHTML = data.total_amount == '' ? '' : '<tr><th>Total</th><th colspan="12">'+data.total_amount+'</th></tr>'+'<tr><th>Delivery_Fee</th><th colspan="12">'+data.delivery_fee+'</th></tr>';
                     var download_pack = document.getElementById('download_package');
                     download_pack.innerHTML = '';
                     download_pack.innerHTML +=
@@ -320,7 +425,6 @@ function editFunction(id)
 
 function deleteFunction(id) 
 {
-    // alert(id);
     event.preventDefault();
     swal.fire({
         title: 'Are you sure?',
@@ -341,10 +445,16 @@ function packageDownload()
     var name = '';
     var date = '';
     var status = '';
+    var updateDate = '';
+    var township='';
+    var driver='';
     name = document.getElementById('name').value;
     date = document.getElementById('date').value;
     status = document.getElementById('status').value;
-    var data = {date,name,status};
+    updateDate = document.getElementById('updateDate').value;
+    driver = document.getElementById('driver_name').value;
+    township = document.getElementById('township_name').value;
+    var data = {date,name,status,updateDate,township,driver};
     var params = new URLSearchParams(data);
     var url = 'export/'+params;
     window.location = url;
@@ -354,9 +464,11 @@ function excelDownload()
     var name = '';
     var date = '';
     var status = '';
+  
     name = document.getElementById('name').value;
     date = document.getElementById('date').value;
     status = document.getElementById('status').value;
+   
     var data = {date,name,status};
     var params = new URLSearchParams(data);
     var url = 'excel-export/'+params;
@@ -374,10 +486,8 @@ function pdfDownload()
     var params = new URLSearchParams(data);
     var url = 'pdf-export/'+params;
     window.location = url;
-    // window.location.href = 'pdf-export/'+date+'/'+name;
 }
 $(document).ready(function () {
-    // $('#updateAlert').hide();
 if({{$isShopper}} == 1){
     var session = '';
      session = sessionStorage.getItem('successAlert');
@@ -408,4 +518,5 @@ if({{$isShopper}} == 1){
     }
     }
 });
+
 </script>

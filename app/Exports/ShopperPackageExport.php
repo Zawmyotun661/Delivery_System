@@ -51,22 +51,34 @@ class ShopperPackageExport implements FromView
         }
         $deposit =Deposit::where('deposits.shopper_id', $this->id)
                             ->sum('deposits.amount');
-        $total = 0;
-        $total_amount = 0;
-        $payable = 0;
-        $total_delivery = 0;
-        foreach($packages as $pack)
-        {
-            $total += $pack->price + $pack->delivery_fee;
-            $total_amount += $pack->price;
-            $payable = $total_amount - $deposit;
-            $total_delivery += $pack->delivery_fee;
-        }
+                            $amount_delivery=0;
+                            $paid_amount=0;
+                            $depo=0;
+                            $amount_paid=0;
+                            $amount_paid=0;
+                            $amount_total=0;
+                            $total_delivery=0;
+         
+                            foreach($packages as $pack){
+                             
+                                if ($pack->paid==='1'){
+                                  $paid_amount += $pack->price;
+                                  $amount_delivery +=$pack->delivery_fee;
+                              }
+                              $amount_total+=$pack->price;
+                              $amount_paid+=$pack->paid_amount;
+                              $amount_paid+=$pack->price;
+                             $total_delivery += $pack->delivery_fee;
+                              $final_amount=$amount_total-$amount_delivery;
+                              $final_deposit= $final_amount-$deposit;
+                            }
         return view('exports.shopper-package', [
             'shoppers' => $packages,
-            'total' => $total,
-            'payable' => $payable,
-            'total_delivery' => $total_delivery,
+            'total_price'=>$amount_total,
+            'amount_delivery'=>$amount_delivery,
+            'final_amount'=>$final_amount,
+            'final_deposit'=>$final_deposit,
+            'total_delivery'=>$total_delivery,
         ]);
         }else {
             $shopperId = $this->id;
@@ -82,10 +94,14 @@ class ShopperPackageExport implements FromView
                 $deposit = Deposit::where('shopper_id',$shopperId)
                                 ->sum('amount');
             }
-            $total = 0;
-            $total_amount = 0;
-            $payable = 0;
-            $total_delivery = 0;
+            $amount_delivery=0;
+            $paid_amount=0;
+            $depo=0;
+            $amount_paid=0;
+            $amount_paid=0;
+            $amount_total=0;
+            $total_delivery=0;
+
             $data = Package::select('packages.*', 'townships.name')
                                 ->join('townships', 'townships.id', '=', 'packages.township_id')
                                 ->where('packages.shopper_id', $shopperId)
@@ -96,21 +112,30 @@ class ShopperPackageExport implements FromView
 
                 foreach($data as $package)
                 {
-                    $total += $package->price + $package->delivery_fee;
-                    $total_amount += $package->price;
-                    $payable = $total_amount - $deposit;
-                    $pack_date = $package->date;
-                    $total_delivery += $package->delivery_fee;
+                   
+                    if ($package->paid==='1'){
+                        $paid_amount += $package->price;
+                        $amount_delivery +=$package->delivery_fee;
+                    }
+                    $amount_total+=$package->price;
+                    $amount_paid+=$package->paid_amount;
+                    $amount_paid+=$package->price;
+                   $total_delivery += $package->delivery_fee;
+                    $final_amount=$amount_total-$amount_delivery;
+                    $final_deposit= $final_amount-$deposit;
                     $deposit_info = Deposit::where('deposits.shopper_id',$shopperId)
-                                            ->where('deposits.date',$pack_date)
+                                            ->where('deposits.date',$package)
                                             ->sum('deposits.amount');
                     $package->deposit_amount = $deposit_info;
                 }
                 return view('exports.shopper-package', [
                     'shoppers' => $data,
-                    'total' => $total,
-                    'payable' => $payable,
-                    'total_delivery' => $total_delivery,
+                  
+                    'total_price'=>$amount_total,
+                    'amount_delivery'=>$amount_delivery,
+                    'final_amount'=>$final_amount,
+                    'final_deposit'=>$final_deposit,
+                    'total_delivery'=>$total_delivery,
                 ]);
         }
     }

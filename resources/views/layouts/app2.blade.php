@@ -41,12 +41,13 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top ">
+  
     <div class="container d-flex align-items-center justify-content-lg-between">
 
-      <h1 class="logo me-auto me-lg-0"><a href="index.html">DeliBurma<span></span></a></h1>
+      <h1 class="logo me-auto me-lg-0"><a href="">DeliBurma<span></span></a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-
+     
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
@@ -54,16 +55,26 @@
           <!-- <li><a class="nav-link scrollto" href="#team">Team</a></li> -->
          
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="{{ url('/online_shop') }}">Onlineshop</a></li>
         </ul>
         
         
       </nav>
+      <!-- <div class="mx-3 mt-2">
+      <ul class="order-last order-lg-0">
+     
+                              <li class="nav-item ">
+                                  <a  class="get-started-btn scrollto" href="{{ url('/online_shop') }}">Onlineshop</a>
+                              </li>
+      </ul>
+      </div> -->
       <div class="mx-3 mt-2">
       <ul class="order-last order-lg-0">
         @guest
                               <li class="nav-item ">
-                                  <a  class="get-started-btn scrollto" href="{{ route('login') }}">Login</a>
+                                  <a  class="get-started-btn scrollto" href="{{ route('login') }}">LOGIN</a>
                               </li>
+                             
                               @else
                               <li class="nav-item dropdown">
             <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -82,15 +93,31 @@
              
             </ul>
           </li>
-                          @endguest
+          @if(Auth::user()->roles[0]->name == 'Admin')
+          <li class="nav-item ">
+            <a href="{{ url('/report_list') }}" class="get-started-btn scrollto">Logged In Dashboard</a>
+        </li>
+        @endif
+        @if(Auth::user()->roles[0]->name == 'Client')
+        <a href="{{ url('/shoppers') }}" class="get-started-btn scrollto">Logged In Dashboard</a>
+        @endif
+        @if(Auth::user()->roles[0]->name == 'Driver')
+        <a href="{{ url('/driver_dashboard') }}" class="get-started-btn scrollto">Logged In Dashboard</a>
+        @endif
+      @endguest
          
         </ul>
         </div>
        <!-- .navbar -->
-       <i class="bi bi-list mobile-nav-toggle"></i>
+       
+   
+      
+      
    
     </div>
-  </header><!-- End Header -->
+    <i class="bi bi-list mobile-nav-toggle mx-3"></i>
+  </header>
+  <!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center justify-content-center">

@@ -21,6 +21,7 @@
                         <tr>
                             <th>Date</th>
                             <th>Deposit Amount</th>
+                            <th>Remark</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -29,6 +30,7 @@
                        <tr>
                            <td >{{ $deposit -> date }}</td>
                            <td >{{ $deposit -> amount }}</td>
+                           <td >{{ $deposit -> remark }}</td>
                            <td>
                                 <a href="{{url('shoppers/'.$id.'/'.'deposit/'.$deposit->id.'/edit')}}" style="text-decoration: none;"> 
                                     <button type="button" class="btn btn-success btn-sm">

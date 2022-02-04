@@ -17,18 +17,19 @@ use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
 */
 
 Route::get('/','App\Http\Controllers\User\UserDashboardController@index');
+Route::get('/online_shop','App\Http\Controllers\User\UserDashboardController@online_shop');
 Route::get('/login', function () {
     return view('auth.login');
 });
 Route::get('search_user', [App\Http\Controllers\User\UserDashboardController::class, 'search'])->name('search_user');
+Route::get('online_shop_search', [App\Http\Controllers\User\UserDashboardController::class, 'online_shop_search'])->name('online_shop_search');
 /////////////////////////////DDDDDDDDDDDDD____DASGBOARD//////////////////////////
 Route::group(['middleware'=> 'auth'], function(){
-
-
 Route::get('/admin/user_list','App\Http\Controllers\admin\AdminDashboardController@index');
 Route::resource('/driver_dashboard','App\Http\Controllers\DriverDashboardController');
 
 /////////////////////////////////////////////////////////////////////////////////////
+Route::get('package/{id}/edit','App\Http\Controllers\PackageController@edit_list');
 Route::resource('/clients','App\Http\Controllers\ClientController');
 Route::get('/clients/{id}/destroy', [App\Http\Controllers\ClientController::class, 'destroy']);
 Route::resource('/country','App\Http\Controllers\CountryController');
@@ -36,13 +37,9 @@ Route::resource('/city','App\Http\Controllers\CityController');
 Route::get('/city/{id}/destroy', [App\Http\Controllers\CityController::class, 'destroy']);
 Route::resource('/township','App\Http\Controllers\TownshipController');
 Route::get('/township/{id}/destroy', [App\Http\Controllers\TownshipController::class, 'destroy']);
-//  Route::resource('/clients', 'App\Http\Controllers\ClientController');
  Route::resource('/drivers', 'App\Http\Controllers\DriverController');
 Route::get('/drivers/{id}/destroy', [App\Http\Controllers\DriverController::class, 'destroy']);
-//  Route::post('/drivers/edit', [App\Http\Controllers\DriverController::class, 'editDriver'])->name('drivers');
- 
  Route::resource('/packages', 'App\Http\Controllers\PackageController');
-//  Route::resource('/packages/{id}/edit', 'App\Http\Controllers\PackageController@edit');
  Route::get('/admin/{id}/manage-role',[App\Http\Controllers\admin\AdminDashboardController::class, 'manage']);
  Route::post('/admin/{id}/update',[App\Http\Controllers\admin\AdminDashboardController::class, 'update']);
 Route::get('/search_users',[App\Http\Controllers\admin\AdminDashboardController::class, 'search']);
@@ -55,7 +52,6 @@ Route::get('search_package_list', [App\Http\Controllers\DriverDashboardControlle
 Route::get('/report_list','App\Http\Controllers\admin\AdminDashboardController@reports' );
 Route::get('search_report', [App\Http\Controllers\admin\AdminDashboardController::class, 'searchReport'])->name('search_report');
 Route::resource('/shoppers','App\Http\Controllers\ShopperController');
-// Route::get('shoppers/{id}/update', 'App\Http\Controllers\ShopperController@update');
 Route::get('shoppers/{id}/destroy', 'App\Http\Controllers\ShopperController@destroy');
 Route::get('/shoppers/{id}/package-list', 'App\Http\Controllers\ShopperController@packages');
 Route::get('/shoppers/{id}/new-package', 'App\Http\Controllers\PackageController@create');
@@ -78,8 +74,7 @@ Route::get('shoppers/{id}/pdf-export/{data}', [App\Http\Controllers\ShopperContr
 Route::get('search_client',[App\Http\Controllers\ClientController::class, 'search'])->name('search_client');
 Route::get('search_township',[App\Http\Controllers\TownshipController::class, 'search'])->name('search_township');
 Route::get('search_city',[App\Http\Controllers\CityController::class, 'search'])->name('search_city');
-
-// Route::resource('/deposit', 'App\Http\Controllers\DepositController');
+Route::get('search_customer',[App\Http\Controllers\ShopperController::class, 'search'])->name('search_customer');
 
 
 Route::get('/home','App\Http\Controllers\HomeController@index')->name('home');

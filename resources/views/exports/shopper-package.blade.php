@@ -1,19 +1,19 @@
 <table>
     <thead>
         <tr>
-            <th style="width: 15px; background-color: #f5f242;"> Date </th>
-            <th style="width: 20px; background-color: #f5f242;"> Package Name </th>
-            <th style="width: 15px; background-color: #f5f242;"> Package Size </th>
-            <th style="width: 30px; background-color: #f5f242;">Receiver Name</th>
-            <th style="width: 25px; background-color: #f5f242;">Receiver Phone Number </th>
-            <th style="width: 50px; background-color: #f5f242;">Receiver Address</th>
-            <th style="width: 20px; background-color: #f5f242;">Township </th>
-            <th style="width: 15px; background-color: #f5f242;">Amount </th>
-            <th style="width: 15px; background-color: #f5f242;">Delivery Fee </th>
-            <th style="width: 15px; background-color: #f5f242;">Deposit</th>
-            <th style="width: 15px; background-color: #f5f242;">Delivery Status </th>
-            <th style="width: 15px; background-color: #f5f242;">Payment Status </th>
-            <th style="width: 25px; background-color: #f5f242;">Remark</th>
+            <th style="background-color: #f5f242;"> Date </th>
+            <th style="background-color: #f5f242;"> Package Name </th>
+            <th style="background-color: #f5f242;"> Package Size </th>
+            <th style="background-color: #f5f242;">Receiver Name</th>
+            <th style="background-color: #f5f242;">Receiver Phone Number </th>
+            <th style="background-color: #f5f242;">Receiver Address</th>
+            <th style="background-color: #f5f242;">Township </th>
+            <th style="background-color: #f5f242;">Amount </th>
+            <th style="background-color: #f5f242;">Delivery Fee </th>
+            <th style="background-color: #f5f242;">Deposit</th>
+            <th style="background-color: #f5f242;">Delivery Status </th>
+            <th style="background-color: #f5f242;">Payment Status </th>
+            <th style="background-color: #f5f242;">Remark</th>
         </tr>
     </thead>
     <tbody>
@@ -36,16 +36,25 @@
         @endforeach
             <tr></tr>
             <tr>
-                <th style="background-color: #42f5c2">Total Amount</th>
-                <th>{{$total}}</th>
+                <th style="background-color: #42f5c2"><strong>Total Amount</strong></th>
+                <th><strong>{{$total_price}}</strong></th>
             </tr>
             <tr>
-                <th style="background-color: #42f5c2">Total Delivery Fee</th>
-                <th>{{$total_delivery}}</th>
+                <th style="background-color: #42f5c2"><strong>Total Delivery</strong></th>
+                <th><strong>{{$total_delivery}}</strong></th>
             </tr>
             <tr>
-                <th style="background-color: #42f5c2">Payable Amount</th>
-                <th>{{$payable}}</th>
+                <th style="background-color: #42f5c2"><strong>Paid Delivery(OS)</strong></th>
+                <th><strong>{{$amount_delivery}}</strong></th>
             </tr>
+            <tr>
+                <th style="background-color: #42f5c2"><strong>Final Amount</strong></th>
+                <th><strong>{{$final_amount}}</strong></th>
+            </tr>
+            <tr>
+                <th style="background-color: #42f5c2"><strong>Payable Amount</strong></th>
+                <th><strong>{{$final_deposit}}</strong></th>
+            </tr>
+           
     </tbody>
 </table>

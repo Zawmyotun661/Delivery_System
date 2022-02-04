@@ -18,6 +18,7 @@ class CreateDepositsTable extends Migration
             $table->date('date');
             $table->integer('amount');
             $table->integer('shopper_id');
+            $table->string('remark')->nullable();
             $table->timestamps();
         });
     }

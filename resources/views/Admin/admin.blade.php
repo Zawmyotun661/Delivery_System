@@ -42,7 +42,7 @@
                         <td>{{$user->email}}</td>
                         <td>
                         @foreach ($user->roles as $role)
-                           <span class="badge" style="background:#1F1C2C ;">{{$role->name}}</span>
+                           <span class="badge" style="background:#1F1C2C ; color:blanchedalmond">{{$role->name}}</span>
                         
                         @endforeach
                     </td>

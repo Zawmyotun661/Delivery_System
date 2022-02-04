@@ -25,8 +25,10 @@ class CreatePackagesTable extends Migration
             $table->longText('address');
             $table->integer('township_id');
             $table->integer('price');
+            $table->string('paid_amount')->nullable();
             $table->integer('delivery_fee');
             $table->string('status');
+            $table->string('paid');
             $table->string('remark')->nullable();
             $table->string('image')->nullable();
             $table->string('payment_status')->nullable();

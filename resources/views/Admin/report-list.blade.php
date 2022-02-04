@@ -6,10 +6,16 @@
             <div class="col-md-10">
             <h5>Report Lists</h5>
                 <div class="row mb-3 mt-5">
+                <label for="date"> Filter by Deliver Date</label>
+                    <div class="form-group col-md-3">
+                        <input type="date" name="date" class="form-control"  placeholder="Enter Date" id="updateDate">
+                    </div>
                     <label for="date"> Filter by Date</label>
                     <div class="form-group col-md-3">
                         <input type="date" name="date" class="form-control"  placeholder="Enter Date" id="date">
                     </div>
+                   
+                    
                     <div class="form-group col-md-3">
                         <select  class="form-select" aria-label="Default select example" name="status" id="status">
                             <option value="">Filter by Delivery Status</option>
@@ -21,6 +27,7 @@
                             <option value="Error">Error</option>
                         </select>
                     </div>
+                    
                     <br>
                     <div class="col-md-6 mx-auto">
                     <div class="input-group" id="myDiv">
@@ -35,6 +42,22 @@
                         </div>
                     </div>
                     </div>
+                    <div class="form-group col-md-3">
+                        <select  class="form-select bg-dark" aria-label="Default select example"  id="township_name">
+                            <option value="">Filter by Township </option>
+                            @foreach($township as $town)
+                            <option value="{{$town->name}}">{{$town->name}}</option>
+                          @endforeach
+                        </select>
+                    </div>
+                    <!-- <div class="form-group col-md-3">
+                        <select  class="form-select bg-secondary" aria-label="Default select example"  id="driver_name">
+                            <option value="">Filter by Driver </option>
+                            @foreach($driver as $driver)
+                            <option value="{{$driver->name}}">{{$driver->name}}</option>
+                          @endforeach
+                        </select>
+                    </div> -->
                 </div>
                 <div id="download_report">
                     <a href="{{url('/reports-export')}}">
@@ -48,7 +71,7 @@
                         <tr>
                             <th class="px-5"> Date </th>
                             <th class="px-3">Client Name</th>
-                            <th class="px-3">Customer Name</th>
+                            <th class="px-3">Customer Name/Online Shop Name</th>
                             <th class="px-3">Receiver Name</th>
                             <th class="px-5">Receiver Phone </th>
                             <th class="px-5">Receiver Address</th>
@@ -62,6 +85,7 @@
                             <th class="px-3">Package Name</th>
                             <th class="px-3">Package Size</th>
                             <th class="px-3">Remark</th>
+                            <th class="px-3">Update Date</th>
                             <th >Receipt</th>
                         </tr>
                     </thead>
@@ -101,6 +125,7 @@
                             <td >{{ $report -> package_name }}</td>
                             <td>{{ $report -> package_size }}</td>
                             <td>{{ $report -> remark }}</td>
+                            <td>{{ $report -> updated_at }}</td>
                             @if( $report->image)
                             <td> <img src="{{ asset('image/'. $report->image) }}" style="width: 100px; height:100px;"></a></td>
                             @endif
@@ -124,7 +149,13 @@ $(document).ready(function(){
          query = $('#name').val();
         var date = '';
          date = $('#date').val();
+         var township = '';
+         township = $('#township_name').val();
+         var driver_name = '';
+         driver_name = $('#driver_name').val();
         var status = '';
+        updateDate = $('#updateDate').val();
+         var status = '';
          status = $('#status').val();
         var tableBody = document.getElementById('table_body');
         tableBody.innerHTML = '';
@@ -133,7 +164,7 @@ $(document).ready(function(){
         $.ajax({
             url:'{{route('search_report')}}',
             type:'GET',
-            data:{'word':query, 'searchDate':date, 'status':status},
+            data:{'word':query, 'searchDate':date,'updateDate':updateDate, 'status':status,'township':township,'driver':driver_name},
             success:function(data) {
                 data.forEach(item => {
                     var status_color = '';
@@ -182,6 +213,7 @@ $(document).ready(function(){
                 +'<td>'+item.package_name+'</td>'+
                 '<td>'+item.package_size+'</td>'+
                 '<td>'+item.remark+'</td>'+
+                '<td>'+item.updated_at+'</td>'+
                 '<td>'+item.image+'</td>'+
                 '</tr>';
                 })
@@ -197,10 +229,16 @@ function searchDownload()
     var name = '';
     var date = '';
     var status = '';
+    var updateDate = '';
+    var township='';
+    
     name = document.getElementById('name').value;
     date = document.getElementById('date').value;
     status = document.getElementById('status').value;
-    var data = {date,name,status};
+    updateDate = document.getElementById('updateDate').value;
+
+    township = document.getElementById('township_name').value;
+    var data = {date,name,status,updateDate,township,driver};
     var params = new URLSearchParams(data);
     var url = 'reports-export/'+params;
     window.location = url;

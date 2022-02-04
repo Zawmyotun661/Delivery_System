@@ -16,6 +16,11 @@
                         <input type="number" name="amount" class="form-control" placeholder="Enter Deposit Amount" 
                         value="{{ $deposit->amount ?? old('amount')}}" required >
                     </div>
+                    <div class="form-group">
+                        <label for="remark">Remark</label>
+                        <input type="text" name="remark" class="form-control" placeholder="Enter Deposit Remark" 
+                        value="{{$deposit->remark ?? old('remark')}}" required >
+                    </div>
                    <button class="btn btn-primary" id="update">Save</button>
                     
                 </form>

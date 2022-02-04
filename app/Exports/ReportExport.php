@@ -13,22 +13,26 @@ class ReportExport implements FromView
     protected $date;
     protected $word;
     protected $status;
+    protected $updateDate;
+    protected $township;
+    protected $driver;
     public function __construct($data)
     {
         if($data == ''){
             $this->date = '';
-        }else {
-            $this->date = $data[0];
-        }
-        if($data == ''){
             $this->word = '';
-        }else{
-            $this->word = $data[1];
-        }
-        if($data == ''){
             $this->status = '';
+            $this->updateDate = '';
+            $this->township = '';
+          
         }else {
+            
+            $this->date = $data[0];
+            $this->word = $data[1];
             $this->status = $data[2];
+            $this->updateDate=$data[3];
+            $this->township=$data[4];
+           
         }
     }
     /**
@@ -40,7 +44,7 @@ class ReportExport implements FromView
     }
     public function view(): View
     {
-        if(!$this->date && !$this->word && !$this->status){
+        if(!$this->date && !$this->word && !$this->status && !$this->updateDate && !$this->township && !$this->driver){
             $reports = Package::select('packages.*', 'townships.name', 'u1.name as client_name', 'shoppers.name as cus_name', 'u2.name as driver_name')
                             ->join('users as u1', 'u1.id', '=', 'packages.client_id')
                             ->leftjoin('users as u2', 'u2.id', '=', 'packages.driver_id')
@@ -63,6 +67,10 @@ class ReportExport implements FromView
             $searchDate = $this->date;
             $searchData = $this->word;
             $searchStatus = $this->status;
+            $updateDate = $this->updateDate;
+            $searchTownship = $this->township;
+            $searchDriver = $this->driver;
+       
             $data = Package::select('packages.*', 'townships.name', 'u1.name as client_name', 'shoppers.name as cus_name', 'u2.name as driver_name')
                             ->join('townships', 'townships.id', '=', 'packages.township_id')
                             ->join('users as u1', 'u1.id', '=', 'packages.client_id')
@@ -72,7 +80,14 @@ class ReportExport implements FromView
                                 $query->where('u1.name', 'like', '%'.$searchData.'%')
                                         ->orWhere('u2.name', 'like', '%'.$searchData.'%')
                                         ->orWhere('townships.name', 'like', '%'.$searchData.'%');
-                            })->where('packages.date', 'like', '%'.$searchDate.'%')
+                                        
+                            }) ->where(function($query) use($searchTownship){
+                                $query->
+                                        Where('townships.name', 'like', '%'.$searchTownship.'%');
+                                        
+                            })
+                            ->where('packages.updated_at', 'like', '%'.$updateDate.'%')
+                            ->where('packages.date', 'like', '%'.$searchDate.'%')
                             ->where('packages.status', 'like', '%'.$searchStatus.'%')
                             ->orderBy('packages.id', 'DESC')->get();
             foreach($data as $report){
@@ -83,9 +98,10 @@ class ReportExport implements FromView
                                         ->sum('deposits.amount');
                 $report->deposit_amount = $deposit_info;
             }
-            return view('exports.packages', [
-                'shoppers' => $data
+            return view('exports.reports', [
+                'reports' => $data
             ]);
+            
         }
         
     }

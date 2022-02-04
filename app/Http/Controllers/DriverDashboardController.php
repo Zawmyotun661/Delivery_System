@@ -31,7 +31,10 @@ class DriverDashboardController extends Controller
                             ->where('drivers.user_id', '=', Auth::user()->id)
                             ->orderBy('packages.id', 'DESC')
                             ->get();
-        return view('driver.driver-dashboard',compact('packages'));
+                            
+
+            $township= Township::select('name')->get();
+        return view('driver.driver-dashboard',compact('packages','township'));
     }
 
     /**
@@ -127,6 +130,8 @@ class DriverDashboardController extends Controller
     {
         if($request->ajax()){
             $searchData = $request->word;
+            $searchDate= $request->date;
+            $searchTownship=$request->township;
             $data = Package::select('packages.*', 'townships.name', 'users.name as driver_name')
                             ->join('townships', 'townships.id', '=', 'packages.township_id')
                             ->join('drivers', 'drivers.client_id', '=', 'packages.client_id')
@@ -135,8 +140,16 @@ class DriverDashboardController extends Controller
                             ->where(function($query) use($searchData){
                                 $query->where('packages.receiver_name', 'like', '%'.$searchData.'%')
                                         ->orWhere('townships.name', 'like', '%'.$searchData.'%')
-                                        ->orwhere('users.name', 'like', '%'.$searchData.'%');
-                            })->orderBy('packages.id', 'DESC')->get();
+                                        
+                                        ->orwhere('packages.phone', 'like', '%'.$searchData.'%');
+                            }) ->where(function($query) use($searchDate){
+                                $query->where('packages.date','like','%'.$searchDate.'%');
+                            })->where(function($query) use($searchTownship){
+                                $query->where('townships.name', 'like', '%'.$searchTownship.'%');
+                                     
+                                        
+                            })
+                            ->orderBy('packages.id', 'DESC')->get();
             return response()->json($data, 200);
         }
     }

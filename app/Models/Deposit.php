@@ -12,5 +12,6 @@ class Deposit extends Model
         'date',
         'amount',
         'shopper_id',
+        'remark',
     ];
 }

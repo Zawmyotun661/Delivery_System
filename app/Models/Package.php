@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Package extends Model
 {
+    
     use HasFactory;
     protected $table = 'packages';
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d ');
+    }
     protected $fillable = [
         'client_id',
         'shopper_id',
@@ -20,12 +25,15 @@ class Package extends Model
         'address',
         'township_id',
         'price',
+        'paid_amount',
         'delivery_fee',
         'status',
         'image',
         'remark',
         'payment_status',
         'driver_id',
+        'paid',
       
     ];
+    
 }

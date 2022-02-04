@@ -80,8 +80,9 @@
                     '<h5>'+   '<label> Package Name </label>'+ ' '+ ':: '+item.package_name+'</h5>'+
                     
                     '<h5>'+    '<label> Receiver Name </label>'+ ' '+ ':: ' +item.receiver_name+'</h5>'+
-                 
+                    '<h5>' +   '<label> Customer Name </label>'+ ' '+ ':: '+item.shopper_name+'</h5>'+
                     '<h5>' +   '<label> Delivery Status </label>'+ ' '+ ':: '+item.status+'</h5>'+
+                    '<h5>' +   '<label> Remark </label>'+ ' '+ ':: '+item.remark+'</h5>'+
                     '<h5>' +   '<label> Driver Name </label>'+ ' '+ ':: '+item.driver_name+'</h5>'+
                    
                   '</div>'+
@@ -107,7 +108,13 @@
                  
                 }
                 else  { 
+                  
                     data.forEach(item => {
+                    if(item.remark==null){
+                        item.remark= ""; 
+                    }else{
+                        item.remark=item.remark;
+                    }
                     card.innerHTML += 
                     '<div class="col">' +
                     '<div class="card l-bg-blue-dark">'+
@@ -116,16 +123,18 @@
                     '<h5>'+   '<label> Package Name </label>'+ ' '+ ':: '+item.package_name+'</h5>'+
                     
                     '<h5>'+    '<label> Receiver Name </label>'+ ' '+ ':: ' +item.receiver_name+'</h5>'+
-                 
+                    '<h5>' +   '<label> Customer Name </label>'+ ' '+ ':: '+item.shopper_name+'</h5>'+
                     '<h5>' +   '<label> Delivery Status </label>'+ ' '+ ':: '+item.status+'</h5>'+
+                    '<h5>' +   '<label> Remark </label>'+ ' '+ ':: '+item.remark+'</h5>'+
                     '<h5>' +   '<label> Driver Name </label>'+ ' '+ ':: '+item.driver_name+'</h5>'+
                    
                   '</div>'+
                     '</div>'+
                     '</div>'+
                     '</div>';
-                    })
-                 
+                    
+                    }   )
+                
                 }
             }
         })

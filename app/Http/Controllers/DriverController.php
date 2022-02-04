@@ -28,8 +28,6 @@ class DriverController extends Controller
         //             })->get();
 
         $drivers = User::join('drivers', 'drivers.user_id', '=', 'users.id')
-                        // ->join('role_users', 'role_users.user_id', '=', 'users.id')
-                        // ->where('role_users.role_id', '=', '3')
                         ->where('drivers.client_id', Auth::user()->id)
                         ->get();
         $search_value = '';

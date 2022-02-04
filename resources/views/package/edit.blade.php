@@ -69,6 +69,13 @@
                     value="{{ $package->delivery_fee ?? old('delivery_fee')}}" id="deli_fee" required>
                     <div class="errors" id="feeError"></div>
                 </div>
+                <div class="form-group">
+                    
+                    <input type="checkbox" name="paid" id="paid"  
+                    value="{{$package->paid}}" {{ $package->paid == 1 ? 'checked' : null }}
+                   >
+                     Paid
+                </div>
                 <div class="form-group mb-2">    
                     <label for="status" class="col-md-4 col-form-label ">{{ __('Delivery Status') }}</label>
                     <select  class="form-select" aria-label="Default select example" name="status" id="status">
@@ -80,6 +87,15 @@
                         <option value="Error" {{$package->status=='Error' ? 'selected' : ''}}>Error</option>
                     </select>
                 </div> 
+                <div class="form-group mb-2">    
+                        <label for="payment_status" class="col-md-4 col-form-label ">{{ __('Payment Status') }}</label>
+                        <select  class="form-select" aria-label="Default select example" name="payment_status" id="payment_status">
+                            <option value="COD">COD</option>
+                            <option value="Paid">Paid</option>
+                          
+                        </select>
+                        <div class="errors" id="paymentError"></div>
+                    </div>
                 <div class="form-group">
                     <label for="remark">Remark</label>
                     <input type="text" name="remark" class="form-control"  placeholder="Enter remark" 
@@ -126,6 +142,8 @@ function updateFunc(package_id, shopper_id)
     var deli_fee = document.getElementById('deli_fee').value;
     var status = document.getElementById('status').value;
     var remark = document.getElementById('remark').value;
+    var payment_status = document.getElementById('payment_status').value;
+    const paid =$('#paid').is(':checked') ? 1 : 0;
     var formData = {
         'id': id,
         'shopper_id': shopper_id,
@@ -139,7 +157,9 @@ function updateFunc(package_id, shopper_id)
         'amount': amount,
         'deli_fee': deli_fee,
         'status': status,
+        'payment_status':payment_status,
         'remark': remark, 
+        'paid' : paid,
     };
     event.preventDefault();
     swal.fire({

@@ -42,6 +42,7 @@ class LoginController extends Controller
         {
             return redirect('/driver_dashboard');
         }
+        
         // return redirect('/');
     }
 

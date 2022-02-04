@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    {{-- <form action=""> --}}
+                 
                     <div class="form-group">
                         <label for="date"> Date</label>
                         <input type="date" name="date" class="form-control"  placeholder="Enter Date" 
@@ -67,6 +67,13 @@
                     value="{{  old('delivery_fee')}}" id="deli_fee" required>
                     <div class="errors" id="feeError"></div>
                     </div>
+                    <div class="form-check">
+                    
+                    <input type="checkbox" class="form-check-input" value="paid" name="paid" id="paid" value="1" />
+                    <label class="form-check-label" for="paid"> Paid</label>
+                    
+               
+                </div>
                     <div class="form-group mb-2">    
                         <label for="status" class="col-md-4 col-form-label ">{{ __('Delivery Status') }}</label>
                         <select  class="form-select" aria-label="Default select example" name="status" id="status">
@@ -79,15 +86,30 @@
                         </select>
                         <div class="errors" id="statusError"></div>
                     </div>
+                    <div class="form-group mb-2">    
+                        <label for="payment_status" class="col-md-4 col-form-label ">{{ __('Payment Status') }}</label>
+                        <select  class="form-select" aria-label="Default select example" name="payment_status" id="payment_status">
+                            <option value="COD">COD</option>
+                            <option value="Paid">Paid</option>
+                          
+                        </select>
+                        <div class="errors" id="paymentError"></div>
+                    </div>
                 <div class="form-group">
                     <label for="remark">Remark</label>
                     <input type="text" name="remark" class="form-control"  placeholder="Enter remark" 
                     value="{{  old('remark')}}" id="remark">
                 </div>
                 {{-- <a href="{{url('shoppers/'.$shopperId.'/package-list')}}"> --}}
-                <button class="btn btn-primary" onclick="createFunc({{$shopperId}})" type="submit">Submit</button>  
+                <button class="btn btn-primary"  onclick="createFunc({{$shopperId}})" type="submit">Submit</button>  
                 {{-- </a> --}}
-            {{-- </form> --}}
+                <!-- <button class="btn btn-primary"  type="submit">
+                 <a href="{{url('shoppers/'.$shopperId.'/package-list')}}"> 
+                 Submit
+                </a>
+              
+                </button>  -->
+           
         </div>      
     </div>
 </div>
@@ -123,6 +145,7 @@ function changeCityFunc() {
 
 function createFunc(id) 
 {
+   
     var date = document.getElementById('date').value;
     var package_name = document.getElementById('package_name').value;
     var package_size = document.getElementById('package_size').value;
@@ -134,6 +157,10 @@ function createFunc(id)
     var deli_fee = document.getElementById('deli_fee').value;
     var status = document.getElementById('status').value;
     var remark = document.getElementById('remark').value;
+    var payment_status = document.getElementById('payment_status').value;
+    const paid =$('#paid').is(':checked') ? 1 : 0;
+
+
     var formData = {
         'shopper_id': id,
         'date': date,
@@ -146,7 +173,9 @@ function createFunc(id)
         'amount': amount,
         'deli_fee': deli_fee,
         'status': status,
+        'payment_status':payment_status,
         'remark': remark, 
+        'paid': paid, 
     };
     $.ajaxSetup({
         headers: {
@@ -161,89 +190,7 @@ function createFunc(id)
             console.log(response)
             window.location.assign('../../shoppers/'+id+'/package-list');
         },
-        error: function(error){
-            if(error.responseJSON.errors.date){
-                $('#dateError').text(error.responseJSON.errors.date);
-            }else {
-                $('#dateError').text('');
-            }
-            if(error.responseJSON.errors.receiver_name){
-                $('#receiverError').text(error.responseJSON.errors.receiver_name);
-            }else {
-                $('#receiverError').text('');
-            }
-            if(error.responseJSON.errors.phone){
-                $('#phoneError').text(error.responseJSON.errors.phone);
-            }else {
-                $('#phoneError').text('');
-            }
-            if(error.responseJSON.errors.amount){
-                $('#amountError').text(error.responseJSON.errors.amount);
-            }else {
-                $('#amountError').text('');
-            }
-            if(error.responseJSON.errors.deli_fee){
-                $('#feeError').text('The delivery fee field is required.');
-            }else {
-                $('#feeError').text('');
-            }
-            if(error.responseJSON.errors.townshipId){
-            $('#cityError').text('The city field is required.');
-            }else {
-                $('#cityError').text('');
-            }
-            if(error.responseJSON.errors.date){
-                $('#date').css('background-color','#FFBABA');
-                $('#dateError').css('color','#D8000C');
-            }else {
-                $('#date').css('background-color','');
-                $('#dateError').css('color','');
-            }
-            if(error.responseJSON.errors.receiver_name){
-                $('#receiver_name').css('background-color','#FFBABA');
-                $('#receiverError').css('color','#D8000C');
-            }else {
-                $('#receiver_name').css('background-color','');
-                $('#receiverError').css('color','');
-            }
-            if(error.responseJSON.errors.phone){
-                $('#phone').css('background-color','#FFBABA');
-                $('#phoneError').css('color','#D8000C');
-            }else {
-                $('#phone').css('background-color','');
-                $('#phoneError').css('color','');
-            }
-            if(error.responseJSON.errors.address){
-                $('#address').css('background-color','#FFBABA');
-                $('#addressError').css('color','#D8000C');
-            }else {
-                $('#address').css('background-color','');
-                $('#addressError').css('color','');
-            }
-            if(error.responseJSON.errors.townshipId){
-                $('#selectBox').css('background-color','#FFBABA');
-                $('#cityError').css('color','#D8000C');
-                // $('#township_select').css('background-color','#FFBABA');
-                // $('#townshipError').css('color','#D8000C');
-            }else{
-                $('#selectBox').css('background-color','');
-                $('#cityError').css('color','');
-            }
-            if(error.responseJSON.errors.amount){
-                $('#amount').css('background-color','#FFBABA');
-                $('#amountError').css('color','#D8000C');
-            }else {
-                $('#amount').css('background-color','');
-                $('#amountError').css('color','');
-            }
-            if(error.responseJSON.errors.deli_fee){
-                $('#deli_fee').css('background-color','#FFBABA');
-                $('#feeError').css('color','#D8000C');
-            }else {
-                $('#deli_fee').css('background-color','');
-                $('#feeError').css('color','');
-            }
-        }
+ 
     })
 
 }

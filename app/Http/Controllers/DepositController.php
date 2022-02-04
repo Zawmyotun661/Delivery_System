@@ -40,9 +40,11 @@ class DepositController extends Controller
         $request->validate([
             'date' => 'required',
             'amount' => 'required',
+           
         ]);
         $deposit = new Deposit;
         $deposit->date = $request->input('date');
+        $deposit->remark = $request->input('remark');
         $deposit->amount = $request->input('amount');
         $deposit->shopper_id = $id;
         $deposit->save();
@@ -86,6 +88,7 @@ class DepositController extends Controller
         $deposit = Deposit::find($deposit_id);
         $deposit->date = $request->input('date');
         $deposit->amount = $request->input('amount');
+        $deposit->remark = $request->input('remark');
         $deposit->shopper_id = $id;
         $deposit->save();
         $deposits = Deposit::where('shopper_id', $id)

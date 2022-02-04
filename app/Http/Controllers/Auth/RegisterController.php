@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
+    
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -74,7 +75,7 @@ class RegisterController extends Controller
             'address' => $data['address'],
             'phone' => $data['phone'],
         ]);
-        $user->roles()->attach(1);
+        $user->roles()->attach(0);
         return $user;
     }
 }

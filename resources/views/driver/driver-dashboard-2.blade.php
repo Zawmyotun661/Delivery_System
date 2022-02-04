@@ -71,11 +71,12 @@
                         <option value="Error" {{$package->status=='Error' ? 'selected' : ''}}>Error</option>
                     </select>
                 </div>  
+          
                 <div class="form-group mb-2">    
                     <label for="payment_status" class="col-md-4 col-form-label ">{{ __('Payment Status') }}</label>
                     <select  class="form-select" aria-label="Default select example" name="payment_status">
-                        <option value="Bank Transfer">Bank Transfer</option>
-                        <option value="Cash">Cash</option>
+                        <option value="COD">COD</option>
+                        <option value="Paid">Paid</option>
                         
                     </select>
                 </div>  

@@ -52,19 +52,15 @@
             <tbody>
                 <tr>
                     <td>Total Amount : </td>
-                    <td style="font-weight: bold;">{{$total}}<div class="div-border"></div></td>
+                    <td style="font-weight: bold;">{{$total_amount}}<div class="div-border"></div></td>
                     
                 </tr>
                 <tr>
-                    <td>Total Delivery Fee : </td>
-                    <td style="font-weight: bold;">{{$total_delivery}}<div class="div-border"></div></td>
+                    <td>Final Amount : </td>
+                    <td style="font-weight: bold;">{{$toget}}<div class="div-border"></div></td>
                     
                 </tr>
-                <tr>
-                    <td>Payable Amount : </td>
-                    <td style="font-weight: bold;">{{$payable}}<div class="div-border"></div></td>
-                    
-                </tr>
+             
             </tbody>
         </table>
     </div>
