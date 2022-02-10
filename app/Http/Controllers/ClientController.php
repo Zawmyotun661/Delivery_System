@@ -116,7 +116,7 @@ class ClientController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required',
-            'password' => 'required',
+        
             'address' => 'required',
             'phone' => 'required',
             'package' => 'required',
@@ -124,12 +124,13 @@ class ClientController extends Controller
         $client = User::find($id);
         $client->name = $request->name;
         $client->email = $request->email;
-        $client->password = Hash::make($request['password']);
+      
         $client->address = $request->address;
         $client->phone = $request->phone;
         $client->update();
         $package = Client::where('user_id', $id)->first();
-        $package->total_package += $request->package;
+        $package->total_package = $request->package;
+        
         $package->save();
         return redirect('clients')->with('successAlert','You Have Successfully Updated!');
     }

@@ -120,6 +120,7 @@
                     '<div class="card l-bg-blue-dark">'+
                     ' <div class="card-body ">'+  
                    '<div class="mb-4">'+
+                   '<h5>'+   '<label> Date </label>'+ ' '+ ':: '+item.date+'</h5>'+
                     '<h5>'+   '<label> Package Name </label>'+ ' '+ ':: '+item.package_name+'</h5>'+
                     
                     '<h5>'+    '<label> Receiver Name </label>'+ ' '+ ':: ' +item.receiver_name+'</h5>'+

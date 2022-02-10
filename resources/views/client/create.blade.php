@@ -19,10 +19,7 @@
                             <input type="text" name="email" class="form-control"  placeholder="Enter Email" 
                             value="{{ $client->email }}" required>
                         </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" class="form-control"  placeholder="Enter Password" required>
-                        </div>
+                    
                         <div class="form-group">
                             <label for="address">Address</label>
                             <textarea name="address" rows="2" class="form-control"
@@ -83,7 +80,7 @@
         </div>
     </div>
 @endsection
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
     document.getElementById("update").addEventListener('click', function(e){
@@ -104,4 +101,4 @@ $(document).ready(function () {
         });
     });
 });
-</script>
+</script> -->
