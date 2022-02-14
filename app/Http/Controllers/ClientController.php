@@ -116,22 +116,19 @@ class ClientController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required',
-        
+            'password' => 'required',
             'address' => 'required',
             'phone' => 'required',
-            'package' => 'required',
+            
         ]);
         $client = User::find($id);
         $client->name = $request->name;
         $client->email = $request->email;
-      
+        $client->password = Hash::make($request['password']);
         $client->address = $request->address;
         $client->phone = $request->phone;
         $client->update();
-        $package = Client::where('user_id', $id)->first();
-        $package->total_package = $request->package;
-        
-        $package->save();
+
         return redirect('clients')->with('successAlert','You Have Successfully Updated!');
     }
 
@@ -192,5 +189,31 @@ class ClientController extends Controller
                             
             return response()->json($data,200);
         }
+    }
+    public function edit_package($id)
+    {
+        $client = User::select('users.*', 'clients.total_package')
+                        ->join('clients', 'clients.user_id', '=', 'users.id')
+                        ->where('users.id', $id)
+                        ->get();
+        return view('client.edit',compact('client'));
+    }
+    public function update_package(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+           
+            'package' => 'required',
+        ]);
+        $client = User::find($id);
+        $client->name = $request->name;
+        $client->email = $request->email;
+       
+        $client->update();
+        $package = Client::where('user_id', $id)->first();
+        $package->total_package = $request->package;
+        $package->save();
+        return redirect('clients')->with('successAlert','You Have Successfully Updated!');
     }
 }

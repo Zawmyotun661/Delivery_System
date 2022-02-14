@@ -40,6 +40,10 @@
                             <th>Contact Number</th>
                             <th>Total Package</th>
                             <th>Total Created Package</th>
+                          
+                           
+                            <th>Update Package</th>
+                            <th>Update Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -52,6 +56,14 @@
                             <td>{{ $client -> phone }}</td>
                             <td>{{ $client -> total_package }}</td>
                             <td>{{ $client -> created_pack }}</td>
+                            <td>{{ $client -> updated_at }}</td>
+                            <td>
+                                <a href="{{url('clients/'.$client->id.'/edit_package')}}" style="text-decoration: none;">
+                                    <button type="button" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-edit"></i> </button>
+                                    </a>
+                               
+                            </td>
                             <td>
                                 <a href="{{url('clients/'.$client->id.'/edit')}}" style="text-decoration: none;">
                                     <button type="button" class="btn btn-success btn-sm">
@@ -59,6 +71,7 @@
                                     </a>
                                 <button clas class="btn btn-danger btn-sm" onclick="deleteFunction({{$client->id}})"> <i class="fa fa-trash"></i> </button>
                             </td>
+                        
                         </tr>
                         @endforeach
                     </tbody>

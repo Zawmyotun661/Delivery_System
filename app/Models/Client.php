@@ -11,6 +11,7 @@ class Client extends Model
     protected $fillable = [
         'user_id',
         'total_package',
+        
     ];
     public function users()
     {

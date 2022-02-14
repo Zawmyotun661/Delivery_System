@@ -19,7 +19,10 @@
                             <input type="text" name="email" class="form-control"  placeholder="Enter Email" 
                             value="{{ $client->email }}" required>
                         </div>
-                    
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" class="form-control"  placeholder="Enter Password" required>
+                        </div>
                         <div class="form-group">
                             <label for="address">Address</label>
                             <textarea name="address" rows="2" class="form-control"
@@ -30,12 +33,8 @@
                             <input type="number" name="phone" class="form-control" placeholder="Enter Contact Number"
                                 value="{{ $client->phone }}"  required> 
                         </div>
-                        <div class="form-group">
-                            <label for="package">Total Package</label>
-                            <input type="number" name="package" class="form-control" placeholder="Enter Total Package"
-                            value="{{ $client->total_package }}"  required> 
-                        </div>
-                        <button class="btn btn-primary" id="update">Save</button>
+                   
+                        <button class="btn btn-primary" id="update">Update</button>
                     </form>
                 @endforeach
                 @else
@@ -75,6 +74,7 @@
                     <button class="btn btn-primary">Create</button>
                     </form>
                 @endif
+               
             </div>
             <div class="col-md-3"></div>
         </div>

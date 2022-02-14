@@ -32,6 +32,8 @@ Route::resource('/driver_dashboard','App\Http\Controllers\DriverDashboardControl
 Route::get('package/{id}/edit','App\Http\Controllers\PackageController@edit_list');
 Route::resource('/clients','App\Http\Controllers\ClientController');
 Route::get('/clients/{id}/destroy', [App\Http\Controllers\ClientController::class, 'destroy']);
+Route::get('/clients/{id}/edit_package', [App\Http\Controllers\ClientController::class, 'edit_package']);
+Route::patch('/clients/{id}/package', [App\Http\Controllers\ClientController::class, 'update_package']);
 Route::resource('/country','App\Http\Controllers\CountryController');
 Route::resource('/city','App\Http\Controllers\CityController');
 Route::get('/city/{id}/destroy', [App\Http\Controllers\CityController::class, 'destroy']);
